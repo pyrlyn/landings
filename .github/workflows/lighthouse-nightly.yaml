@@ -9,6 +9,7 @@ on:
   workflow_dispatch: {}
 permissions:
   contents: 'read'
+  packages: 'read'
 concurrency:
   group: 'lighthouse-nightly'
   cancel-in-progress: false
@@ -59,7 +60,7 @@ jobs:
       env:
         SITE_URL: 'https://pyrlyn.dev'
         SITE_BASE: '/'
-        GITHUB_TOKEN: '${{ secrets.BACKEND_PACKAGES_TOKEN }}'
+        GITHUB_TOKEN: '${{ secrets.BACKEND_PACKAGES_TOKEN || github.token }}'
       working-directory: 'landings/pyrlyn'
       run: './gradlew generateSite'
     - id: 'step-5'
