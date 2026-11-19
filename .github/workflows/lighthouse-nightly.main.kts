@@ -44,7 +44,7 @@ val lhciVersion = "0.15.1"
 val buildEnv = mapOf(
     "SITE_URL" to "https://pyrlyn.dev",
     "SITE_BASE" to "/",
-    "GITHUB_TOKEN" to "\${{ secrets.BACKEND_PACKAGES_TOKEN }}",
+    "GITHUB_TOKEN" to "\${{ secrets.BACKEND_PACKAGES_TOKEN || github.token }}",
 )
 
 workflow(
@@ -63,7 +63,7 @@ workflow(
         useLocalBindingsServerAsFallback = false,
     ),
     concurrency = Concurrency(group = "lighthouse-nightly", cancelInProgress = false),
-    permissions = mapOf(Permission.Contents to Mode.Read),
+    permissions = mapOf(Permission.Contents to Mode.Read, Permission.Packages to Mode.Read),
 ) {
     job(id = "lighthouse", name = "Lighthouse CI", runsOn = UbuntuLatest, timeoutMinutes = 25) {
         uses(name = "Checkout", action = Checkout(persistCredentials = false, _customVersion = checkoutSha))
