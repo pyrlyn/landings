@@ -43,6 +43,31 @@ class SeoTest {
         assertEquals("Intro · Rtok docs | Pyrlyn", Seo.documentationTitle("Intro", "Rtok", null))
     }
 
+    private fun project(language: String?): dev.pyrlyn.landing.content.Project {
+        val dir = java.io.File("build/tmp/seo-test").apply { mkdirs() }
+        val file = java.io.File(dir, "demo.md")
+        file.writeText(
+            "---\ntitle: demo\ntagline: A demo.\nrepo: https://github.com/pyrlyn/demo\n" +
+                "install: demo\nversion: \"1.0.0\"\naccent: \"#123456\"\n" +
+                (language?.let { "language: $it\n" } ?: "") + "---\n\n## Overview\n",
+        )
+        return dev.pyrlyn.landing.content.Project.load(file)
+    }
+
+    private val seo = Seo(dev.pyrlyn.landing.config.SiteConfig.fromEnv { null })
+
+    @Test
+    fun sourceCodeNamesTheLanguageFromTheFrontMatter() {
+        val node = seo.sourceCode(project("Kotlin"))
+        assertEquals("\"Kotlin\"", node["programmingLanguage"].toString())
+        assertEquals("\"https://github.com/pyrlyn/demo\"", node["codeRepository"].toString())
+    }
+
+    @Test
+    fun sourceCodeLeavesTheLanguageOutWhenUnknown() {
+        assertFalse("programmingLanguage" in seo.sourceCode(project(null)))
+    }
+
     @Test
     fun graphEscapesScriptBreakouts() {
         val g = Seo(dev.pyrlyn.landing.config.SiteConfig.fromEnv { null })

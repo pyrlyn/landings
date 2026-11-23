@@ -23,6 +23,8 @@ data class Project(
     val featured: Boolean,
     val order: Int?,
     val body: String,
+    /** Main programming language of the source, for structured data; null when the page does not say. */
+    val language: String? = null,
 ) {
     companion object {
         private val hex = Regex("^#[0-9a-fA-F]{6}$")
@@ -63,6 +65,7 @@ data class Project(
                 featured = d["featured"] == true,
                 order = d["order"] as? Int,
                 body = fm.body,
+                language = s("language")?.trim()?.takeIf { it.isNotEmpty() },
             )
         }
     }

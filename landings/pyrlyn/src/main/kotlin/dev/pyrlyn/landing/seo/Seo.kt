@@ -58,7 +58,8 @@ class Seo(private val cfg: SiteConfig) {
 
     fun sourceCode(t: Project) = buildJsonObject {
         put("@type", "SoftwareSourceCode"); put("@id", "${abs("/${t.id}/")}#source"); put("name", "${t.title} source code")
-        put("codeRepository", t.repo); put("programmingLanguage", "Rust")
+        put("codeRepository", t.repo)
+        t.language?.let { put("programmingLanguage", it) }
         put("targetProduct", buildJsonObject { put("@id", appId(t.id)) })
     }
 

@@ -42,6 +42,7 @@ hand (`workflow_dispatch`). It copies `docs/site.md` to
 | `install_alternatives` | list of strings, optional | Other install commands, in the order the README lists them |
 | `version` | string, semver without `v` | Latest published release |
 | `accent` | `#RRGGBB` | Suggested accent colour, the dark-theme accent of the project's own site |
+| `language` | string, optional | Main programming language of the source (`Kotlin`, `Rust`, ...), for the page's structured data; left out of it when not set |
 
 ## Body
 
