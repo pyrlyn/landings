@@ -43,7 +43,7 @@ data class SiteConfig(
             val ga = v("GA_MEASUREMENT_ID").ifEmpty { GA_FALLBACK }
             val ph = v("POSTHOG_KEY").ifEmpty { POSTHOG_FALLBACK }
             val api = v("API_URL")
-            val rawBase = env("SITE_BASE") ?: "/"
+            val rawBase = v("SITE_BASE")
             val base = "/" + rawBase.trim('/').let { if (it.isEmpty()) "" else "$it/" }
             return SiteConfig(
                 siteUrl = v("SITE_URL").ifEmpty { "https://pyrlyn.dev" },

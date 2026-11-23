@@ -27,6 +27,12 @@ class SiteConfigTest {
     }
 
     @Test
+    fun baseIgnoresSurroundingWhitespaceLikeEveryOtherVariable() {
+        assertEquals("/cv/", cfg("SITE_BASE" to " /cv/\n").base)
+        assertEquals("/", cfg("SITE_BASE" to " ").base)
+    }
+
+    @Test
     fun urlAndAbsJoinBaseAndPath() {
         val c = cfg("SITE_URL" to "https://listepo.dev/", "SITE_BASE" to "/cv/")
         assertEquals("/cv/", c.url())
