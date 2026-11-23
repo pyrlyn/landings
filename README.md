@@ -1,4 +1,4 @@
-# landing
+# landings
 
 Kotlin/JVM static site for [pyrlyn.dev](https://pyrlyn.dev).
 
