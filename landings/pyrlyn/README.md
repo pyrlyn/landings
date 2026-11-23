@@ -1,9 +1,9 @@
-# landing-kotlin
+# Pyrlyn landing
 
-This project lives at `landings/pyrlyn/` in the [pyrlyn/landing](https://github.com/pyrlyn/landing) repository. Run Gradle commands from this directory.
+This project lives at `landings/pyrlyn/` in the [pyrlyn/landings](https://github.com/pyrlyn/landings) repository. Run Gradle commands from this directory.
 
-A 1:1 port of the pyrlyn.dev landing (the Astro `pyrlyn/landing`, main) to Kotlin/JVM. The site is
-generated statically, with the same routes, HTML structure and CSS as the original.
+The Kotlin/JVM static site for [pyrlyn.dev](https://pyrlyn.dev). It was originally a 1:1 port of the Astro site that now lives in [pyrlyn-archive/landing](https://github.com/pyrlyn-archive/landing). The site is
+generated statically, with the same routes, HTML structure and CSS as that original.
 
 - **Templates:** kotlinx.html
 - **Data:** kotlinx-serialization (JSON copy in `src/main/resources/data`)
