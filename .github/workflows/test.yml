@@ -1,0 +1,36 @@
+name: test
+
+# Unit tests for the site generator on push to main and on pull requests.
+# Only the root :test task is needed; :web-plans (the only consumer of
+# backend:landing-client) is not on that path, so this job does not need
+# BACKEND_PACKAGES_TOKEN and can run on forks.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6 # v6.4.0
+        with:
+          build-root-directory: landings/pyrlyn
+      - name: Unit tests
+        working-directory: landings/pyrlyn
+        run: ./gradlew :test --console=plain
