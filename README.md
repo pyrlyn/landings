@@ -1,4 +1,4 @@
-# landings
+<h1><picture><source media="(prefers-color-scheme: dark)" srcset="landings/pyrlyn/public/pyrlyn/pyrlyn-mark-on-dark.svg"><img src="landings/pyrlyn/public/pyrlyn/pyrlyn-mark-on-light.svg" width="32" height="32" alt="" align="absmiddle"></picture> landings</h1>
 
 Kotlin/JVM static site for [pyrlyn.dev](https://pyrlyn.dev).
 
