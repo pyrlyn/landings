@@ -53,9 +53,19 @@ gh auth refresh -s read:packages
 GITHUB_TOKEN=$(gh auth token) ./gradlew build
 ```
 
-CI reads it from the `BACKEND_PACKAGES_TOKEN` secret. To build against a backend checkout instead of the
-published client (to try an API change before it is released), pass its path; Gradle then builds
-`:shared:landing-client` from it in a composite build and needs no token:
+CI reads it from the `BACKEND_PACKAGES_TOKEN` secret (a personal access token (classic) with `read:packages`:
+Maven packages are scoped to `pyrlyn/backend`, so this repository's own `GITHUB_TOKEN` cannot read them). The
+`Dockerfile` takes the token as the BuildKit secret `GITHUB_TOKEN`, never as a build argument, so it stays out of
+the image and the build cache:
+
+```sh
+GITHUB_TOKEN=$(gh auth token) docker build --secret id=GITHUB_TOKEN,env=GITHUB_TOKEN -t pyrlyn-landing .
+```
+
+On Coolify, keep `GITHUB_TOKEN` a build variable and turn on "Use Docker Build Secrets".
+
+To build against a backend checkout instead of the published client (to try an API change before it is
+released), pass its path; Gradle then builds `:shared:landing-client` from it in a composite build and needs no token:
 
 ```sh
 ./gradlew build -PbackendDir=../backend
